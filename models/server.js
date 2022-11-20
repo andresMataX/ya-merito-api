@@ -1,5 +1,6 @@
 const express = require('express')
 var cors = require('cors')
+const db = require('../db/connection')
 
 
 class Server {
@@ -8,15 +9,41 @@ class Server {
 
     this.app = express()
     this.port = process.env.PORT
+
     this.paths = {
       auth: '/api/auth',
     }
+
+    this.dbConnection()
+    this.middlewares()
+    this.routes()
+
+  }
+
+  async dbConnection() {
+
+    try {
+
+      await db.authenticate()
+      console.log('Base de datos online');
+
+    } catch (error) {
+      throw new Error(error)
+    }
+
+  }
+
+  middlewares() {
+
+    this.app.use(cors())
+
+    this.app.use(express.json())
 
   }
 
   routes() {
 
-    // this.app.use(this.paths.auth, )
+    this.app.use(this.paths.auth, require('../routes/auth.routes'))
 
   }
 
