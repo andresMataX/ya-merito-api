@@ -39,7 +39,34 @@ const crearUsuario = async (req = request, res = response) => {
 }
 
 
+const actualizarUsuario = async (req = request, res = response) => {
+
+  const { id } = req.params;
+
+  const { password, ...resto } = req.body;
+
+  if (password) {
+    const salt = bcryptjs.genSaltSync()
+    resto.password = bcryptjs.hashSync(password, salt)
+
+    const usuario = await Usuario.findByPk(id)
+
+    if (!usuario) {
+      return res.status(400).json({
+        msg: 'No existe un usuario con el id ' + id
+      })
+    }
+
+    await usuario.update(resto)
+
+    return res.json(usuario)
+  }
+
+}
+
+
 module.exports = {
   obtenerUsuarios,
-  crearUsuario
+  crearUsuario,
+  actualizarUsuario
 }

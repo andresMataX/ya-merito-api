@@ -1,7 +1,8 @@
 const { Router } = require('express')
 const { check } = require('express-validator')
-const { obtenerUsuarios, crearUsuario } = require('../controllers/usuarios')
-const { emailExiste } = require('../helpers/db-validators')
+
+const { obtenerUsuarios, crearUsuario, actualizarUsuario } = require('../controllers/usuarios')
+
 const { validarCampos } = require('../middlewares/validar-campos')
 
 const router = Router()
@@ -15,5 +16,11 @@ router.post('/', [
   check('password', 'El password debe de ser más de 4 letras.').isLength({ min: 4 }),
   validarCampos
 ], crearUsuario)
+
+router.put('/:id', [
+  check('id', 'No es un ID válido'),
+  check('password', 'El password debe de ser más de 4 letras.').isLength({ min: 4 }),
+  validarCampos
+], actualizarUsuario)
 
 module.exports = router
