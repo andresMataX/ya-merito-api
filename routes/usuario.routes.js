@@ -23,4 +23,5 @@ router.put('/:id', [
   validarCampos
 ], actualizarUsuario)
 
+
 module.exports = router
