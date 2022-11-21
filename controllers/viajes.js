@@ -11,7 +11,8 @@ const obtenerViajes = async (req = request, res = response) => {
   const viajes = await Viaje.findAll({
     where: {
       id_usuario: id
-    }
+    },
+    order: [['createdAt', 'DESC']]
   })
 
   res.json(viajes)
