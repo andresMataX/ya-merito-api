@@ -27,12 +27,12 @@ const crearUsuario = async (req = request, res = response) => {
     })
   }
 
-  const usuario = new Usuario(req.body)
+  const usuario = Usuario.build(req.body)
 
   const salt = bcryptjs.genSaltSync()
   usuario.password = bcryptjs.hashSync(password, salt)
 
-  usuario.save()
+  await usuario.save()
 
   res.json(usuario)
 

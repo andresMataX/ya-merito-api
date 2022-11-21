@@ -18,7 +18,7 @@ router.post('/', [
 ], crearUsuario)
 
 router.put('/:id', [
-  check('id', 'No es un ID válido'),
+  check('id', 'El ID es obligatorio').not().isEmpty(),
   check('password', 'El password debe de ser más de 4 letras.').isLength({ min: 4 }),
   validarCampos
 ], actualizarUsuario)
