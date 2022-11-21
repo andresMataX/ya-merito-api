@@ -1,13 +1,18 @@
 const { Router } = require('express')
 const { check } = require('express-validator')
 
-const { obtenerUsuarios, crearUsuario, actualizarUsuario } = require('../controllers/usuarios')
+const { obtenerUsuarios, crearUsuario, actualizarUsuario, obtenerUsuario } = require('../controllers/usuarios')
 
 const { validarCampos } = require('../middlewares/validar-campos')
 
 const router = Router()
 
 router.get('/', obtenerUsuarios)
+
+router.get('/:id', [
+  check('id', 'El ID es obligatorio').not().isEmpty(),
+  validarCampos
+], obtenerUsuario)
 
 router.post('/', [
   check('email', 'El email no es válido').isEmail(),
