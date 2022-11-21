@@ -4,7 +4,15 @@ const Usuario = require('../models/usuario')
 
 const obtenerViajes = async (req = request, res = response) => {
 
-  const viajes = await Viaje.findAll()
+  // const viajes = await Viaje.findAll({ order: [['createdAt', 'ASC/DESC']] })
+
+  const { id } = req.params
+
+  const viajes = await Viaje.findAll({
+    where: {
+      id_usuario: id
+    }
+  })
 
   res.json(viajes)
 
