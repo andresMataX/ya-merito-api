@@ -1,16 +1,23 @@
 const { Router } = require('express')
 const { check } = require('express-validator')
 
-const { obtenerViajes, crearViaje } = require('../controllers/viajes')
+const { crearViaje, obtenerViajesPorUsuario, obtenerViajes, obtenerViaje } = require('../controllers/viajes')
 
 const { validarCampos } = require('../middlewares/validar-campos')
 
 const router = Router()
 
+router.get('/', obtenerViajes)
+
 router.get('/:id', [
   check('id', 'El ID es obligatorio').not().isEmpty(),
   validarCampos
-], obtenerViajes)
+], obtenerViaje)
+
+router.get('/usuario/:id', [
+  check('id', 'El ID es obligatorio').not().isEmpty(),
+  validarCampos
+], obtenerViajesPorUsuario)
 
 router.post('/:id', [
   check('id', 'El ID es obligatorio').not().isEmpty(),
