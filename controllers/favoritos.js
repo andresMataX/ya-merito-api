@@ -3,6 +3,24 @@ const Viaje = require('../models/viaje')
 const Favorito = require('../models/favorito')
 const Usuario = require('../models/usuario')
 
+const obtenerFavoritos = async (req, res = response) => {
+
+  const favoritos = await Favorito.findAll()
+
+  return res.json(favoritos)
+
+}
+
+const obtenerFavorito = async (req = request, res = response) => {
+
+  const { id } = req.params
+
+  const viaje = await Favorito.findByPk(id)
+
+  return res.json(viaje)
+
+}
+
 const obtenerFavoritosUsuario = async (req = request, res = response) => {
 
   // const viajes = await Viaje.findAll({ order: [['createdAt', 'ASC/DESC']] })
@@ -72,5 +90,7 @@ const crearFavorito = async (req = request, res = response) => {
 
 module.exports = {
   obtenerFavoritosUsuario,
-  crearFavorito
+  crearFavorito,
+  obtenerFavoritos,
+  obtenerFavorito,
 }

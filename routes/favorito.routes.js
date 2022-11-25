@@ -1,13 +1,20 @@
 const { Router } = require('express')
 const { check } = require('express-validator')
-const { obtenerFavoritosUsuario, crearFavorito } = require('../controllers/favoritos')
-
+const { obtenerFavoritosUsuario, crearFavorito, obtenerFavoritos, obtenerFavorito } = require('../controllers/favoritos')
 
 const { validarCampos } = require('../middlewares/validar-campos')
 
 const router = Router()
 
+router.get('/', obtenerFavoritos)
+
 router.get('/:id', [
+  check('id', 'El ID es obligatorio').not().isEmpty(),
+  validarCampos
+], obtenerFavorito)
+
+
+router.get('/usuario/:id', [
   check('id', 'El ID es obligatorio').not().isEmpty(),
   validarCampos
 ], obtenerFavoritosUsuario)
