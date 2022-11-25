@@ -35,11 +35,18 @@ const crearFavorito = async (req = request, res = response) => {
 
     const { id } = req.params
 
-    const usuario = await Usuario.findByPk(id);
+    const usuario = await Usuario.findByPk(id)
+    const direccion = await Viaje.findByPk(req.body.id_direccion)
 
     if (!usuario) {
       return res.status(400).json({
         msg: 'No existe un usuario con el id ' + id
+      })
+    }
+
+    if (!direccion) {
+      return res.status(400).json({
+        msg: 'No existe una dirección con el id ' + req.body.id_direccion
       })
     }
 
