@@ -26,11 +26,15 @@ const obtenerViajesPorUsuario = async (req = request, res = response) => {
 
   const { id } = req.params
 
+  const { page = 0 } = req.query
+
   const viajes = await Viaje.findAll({
     where: {
       id_usuario: id
     },
-    order: [['createdAt', 'DESC']]
+    limit: 12,
+    offset: (Number.parseInt(page) - 1) * 12,
+    order: [['createdAt', 'DESC']],
   })
 
   res.json(viajes)
