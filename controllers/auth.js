@@ -10,7 +10,8 @@ const login = async (req = request, res) => {
 
     const usuario = await Usuario.findOne({
       where: {
-        email
+        email,
+        estado: true
       }
     })
 
