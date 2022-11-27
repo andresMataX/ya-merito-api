@@ -111,10 +111,36 @@ const actualizarFavorito = async (req = request, res = response) => {
 }
 
 
+const eliminarFavorito = async (req = request, res = response) => {
+
+  try {
+
+    const { id } = req.params
+
+    const favorito = await Favorito.findByPk(id)
+
+    if (!favorito) {
+      return res.status(400).json({
+        msg: 'No existe un favorito con el id ' + id
+      })
+    }
+
+    await favorito.destroy()
+
+    return res.json(favorito)
+
+  } catch (error) {
+    console.log(error);
+  }
+
+}
+
+
 module.exports = {
   obtenerFavoritosUsuario,
   crearFavorito,
   obtenerFavoritos,
   obtenerFavorito,
-  actualizarFavorito
+  actualizarFavorito,
+  eliminarFavorito
 }
