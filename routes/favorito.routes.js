@@ -1,6 +1,6 @@
 const { Router } = require('express')
 const { check } = require('express-validator')
-const { obtenerFavoritosUsuario, crearFavorito, obtenerFavoritos, obtenerFavorito } = require('../controllers/favoritos')
+const { obtenerFavoritosUsuario, crearFavorito, obtenerFavoritos, obtenerFavorito, actualizarFavorito } = require('../controllers/favoritos')
 
 const { validarCampos } = require('../middlewares/validar-campos')
 
@@ -26,6 +26,11 @@ router.post('/:id', [
   check('icono', 'El nombre del icono es obligatorio').not().isEmpty(),
   validarCampos
 ], crearFavorito)
+
+router.put('/:id', [
+  check('id', 'El ID es obligatorio').not().isEmpty(),
+  validarCampos
+], actualizarFavorito)
 
 
 module.exports = router

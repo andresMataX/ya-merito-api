@@ -68,8 +68,6 @@ const crearFavorito = async (req = request, res = response) => {
       })
     }
 
-    console.log(req.body);
-
     const favorito = Favorito.build({
       id_direccion: req.body.id_direccion,
       id_usuario: Number.parseInt(id),
@@ -88,9 +86,35 @@ const crearFavorito = async (req = request, res = response) => {
 }
 
 
+const actualizarFavorito = async (req = request, res = response) => {
+
+  try {
+
+    const { id } = req.params
+
+    const favorito = await Favorito.findByPk(id)
+
+    if (!favorito) {
+      return res.status(400).json({
+        msg: 'No existe un favorito con el id ' + id
+      })
+    }
+
+    await favorito.update(req.body)
+
+    return res.json(favorito)
+
+  } catch (error) {
+    console.log(error);
+  }
+
+}
+
+
 module.exports = {
   obtenerFavoritosUsuario,
   crearFavorito,
   obtenerFavoritos,
   obtenerFavorito,
+  actualizarFavorito
 }
