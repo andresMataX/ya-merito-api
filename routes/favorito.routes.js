@@ -13,7 +13,6 @@ router.get('/:id', [
   validarCampos
 ], obtenerFavorito)
 
-
 router.get('/usuario/:id', [
   check('id', 'El ID es obligatorio').not().isEmpty(),
   validarCampos

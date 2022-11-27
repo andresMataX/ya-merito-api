@@ -1,7 +1,7 @@
 const { Router } = require('express')
 const { check } = require('express-validator')
 
-const { obtenerUsuarios, crearUsuario, actualizarUsuario, obtenerUsuario } = require('../controllers/usuarios')
+const { obtenerUsuarios, crearUsuario, actualizarUsuario, obtenerUsuario, eliminarUsuario } = require('../controllers/usuarios')
 
 const { validarCampos } = require('../middlewares/validar-campos')
 
@@ -27,6 +27,11 @@ router.put('/:id', [
   check('password', 'El password debe de ser más de 4 letras.').isLength({ min: 4 }),
   validarCampos
 ], actualizarUsuario)
+
+router.delete('/:id', [
+  check('id', 'El ID es obligatorio').not().isEmpty(),
+  validarCampos
+], eliminarUsuario)
 
 
 module.exports = router

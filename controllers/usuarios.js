@@ -4,7 +4,11 @@ const Usuario = require('../models/usuario')
 
 const obtenerUsuarios = async (req = request, res = response) => {
 
-  const usuarios = await Usuario.findAll()
+  const usuarios = await Usuario.findAll({
+    where: {
+      estado: true
+    }
+  })
 
   return res.json(usuarios)
 
@@ -79,10 +83,35 @@ const actualizarUsuario = async (req = request, res = response) => {
 
 }
 
+const eliminarUsuario = async (req = request, res = response) => {
+
+  try {
+
+    const { id } = req.params;
+
+    const usuario = await Usuario.findByPk(id)
+
+    if (!usuario) {
+      return res.status(400).json({
+        msg: 'No existe un usuario con el id ' + id
+      })
+    }
+
+    await usuario.update({ estado: false });
+
+    return res.json(usuario)
+
+  } catch (error) {
+
+  }
+
+}
+
 
 module.exports = {
   obtenerUsuarios,
   obtenerUsuario,
   crearUsuario,
-  actualizarUsuario
+  actualizarUsuario,
+  eliminarUsuario,
 }
